@@ -5,13 +5,13 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        classpath "org.grails.plugins:hibernate5:6.0.0"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.1"
+        classpath "org.grails.plugins:hibernate5:6.0.0"
     }
 }
 
 version "0.1"
-group "newapp"
+group "newApp"
 
 apply plugin:"eclipse"
 apply plugin:"idea"

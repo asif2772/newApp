@@ -1,5 +1,6 @@
 package Security
 
+import com.yourapp.User
 import grails.plugin.springsecurity.SpringSecurityUtils
 
 class LoginController {
@@ -25,5 +26,21 @@ class LoginController {
     def newRegister () {
 
         render(view: 'registrationForm')
+    }
+
+    def createUser () {
+        params
+        params
+        if (params.email && params.password) {
+            User user = new User()
+            user.firstName(params.firstName)
+            user.lastName(params.lastName)
+            user.address(params.address)
+            user.phoneNo(params.phoneNo)
+            user.dateOfBirth(params.dateOfBirth)
+            user.email(params.email)
+            user.password(params.password)
+            user.save(flash: true)
+        }
     }
 }

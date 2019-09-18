@@ -1,42 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
-                </div>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <g:external dir="assets" file="application.min.css" />
+    <g:external dir="assets" file="bootstrap-timepicker.css" />
+    <g:external dir="assets" file="bootstrap-timepicker.min.css" />
+    <g:external dir="assets" file="bootstrap-timepicker.js" />
+    <g:external dir="assets" file="bootstrap-timepicker.min.js" />
+    <g:external dir="assets" file="application.js" />
+    <g:external dir="assets" file="bootstrap.min.js" />
+
+</head>
+<body>
+<div class="signup-form">
+    <form action="createUser" method="post">
+        <h2>Register</h2>
+        <p class="hint-text">Create your account. It's free and only takes a minute.</p>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-6"><input type="text" class="form-control" name="firstName" placeholder="First Name" required="required"></div>
+                <div class="col-xs-6"><input type="text" class="form-control" name="lastName" placeholder="Last Name" required="required"></div>
             </div>
         </div>
-    </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="address" placeholder="Address" required="">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="phoneNo" placeholder="Phone no" required="">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="email" placeholder="Email" required="required">
+        </div>
+        <div class="form-group">
+            <input type="text" value="${new Date()}" id="dateOfBirth" class="form-control" placeholder="Date of birth" name="dateOfBirth" required="required"/>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+        </div>
+
+        <div class="form-group" style="text-align: center">
+            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="text" ${createLink(controller: 'login', action: 'auth')} class="btn btn-worning">Cancel</button>
+        </div>
+    </form>
+    <div class="text-center">Already have an account? <a href="#">Sign in</a></div>
+</div>
+</body>
 </html>
 
-<script>
-
-    $('#exampleModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var recipient = button.data('whatever');
-        var modal = $(this);
-        modal.find('.modal-title').text('New message to ' + recipient);
-        modal.find('.modal-body input').val(recipient);
-    })
+<script type="text/javascript">
+    $('#dateOfBirth').datetimepicker({
+        format: 'yyyy-mm-dd'
+    });
 </script>
