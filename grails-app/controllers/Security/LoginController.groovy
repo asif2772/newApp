@@ -1,10 +1,19 @@
 package Security
 
 import com.yourapp.User
-import grails.plugin.springsecurity.SpringSecurityUtils
+import grails.plugin.springsecurity.SpringSecurityService
 
+import grails.plugin.springsecurity.SpringSecurityUtils
+import org.springframework.security.access.annotation.Secured
+import org.springframework.security.authentication.AuthenticationTrustResolver
+import org.springframework.security.core.context.SecurityContextHolder
+
+import javax.servlet.http.HttpServletResponse
+
+@Secured('permitAll')
 class LoginController {
-    def springSecurityService
+    AuthenticationTrustResolver authenticationTrustResolver
+    SpringSecurityService springSecurityService
 
     def index() {
         if (springSecurityService.isLoggedIn()) {
@@ -17,30 +26,29 @@ class LoginController {
     }
     def auth () {
 
+        def conf = getConf()
+        if (springSecurityService.isLoggedIn()) {
+            redirect uri: conf.successHandler.defaultTargetUrl
+            return
+        }
+
+        String postUrl = request.contextPath + conf.apf.filterProcessesUrl
+        render view: 'auth', model: [postUrl: postUrl,
+                                     usernameParameter: conf.apf.usernameParameter,
+                                     passwordParameter: conf.apf.passwordParameter]
+    }
+
+    def loginSuccess(){
+
+        if (SpringSecurityUtils.ifAllGranted('ROLE_ADMIN')) {
+            redirect(controller: 'registerUser', action: 'admin')
+        } else {
+            redirect(controller: 'registerUser', action: 'index')
+        }
     }
 
     protected ConfigObject getConf() {
         SpringSecurityUtils.securityConfig
     }
-
-    def newRegister () {
-
-        render(view: 'registrationForm')
-    }
-
-    def createUser () {
-        params
-        params
-        if (params.email && params.password) {
-            User user = new User()
-            user.firstName(params.firstName)
-            user.lastName(params.lastName)
-            user.address(params.address)
-            user.phoneNo(params.phoneNo)
-            user.dateOfBirth(params.dateOfBirth)
-            user.email(params.email)
-            user.password(params.password)
-            user.save(flash: true)
-        }
-    }
 }
+

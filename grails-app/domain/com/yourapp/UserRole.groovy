@@ -82,7 +82,7 @@ class UserRole implements Serializable {
 	}
 
 	static mapping = {
-		id composite: ['user', 'role']
+		id composite: ['userUtils', 'role']
 		version false
 	}
 }
